@@ -1,21 +1,11 @@
-function Button() {
-  const handleClick = () => {
-    console.log("Button clicked!");
-  };
-
+function Button(props) {
   return (
     <button
-      style={{
-        backgroundColor: "white",
-        border: "1px solid black",
-        padding: "4px 8px",
-        cursor: "pointer",
-        borderRadius: "4px",
-      }}
+      className="bg-white border border-black py-1 px-2 rounded cursor-pointer"
       type="button"
-      onMouseOver={handleClick}
+      onCLick={props.onClick}
     >
-      Click me
+      {props.children}
     </button>
   );
 }
