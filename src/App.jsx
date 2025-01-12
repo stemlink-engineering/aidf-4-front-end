@@ -1,23 +1,22 @@
-import { Button } from "@/components/ui/button";
-import Greeting from "./Greeting";
-import { Switch } from "@/components/ui/switch"
-
+import Navigation from "./components/Navigation";
+import Hero from "./components/Hero";
+import HotelListings from "./components/HotelListings";
 
 const App = () => {
-  const name = "Manupa";
-  const age = 24;
-
-  const handleClick = () => {
-    console.log("Button clicked!");
-  };
 
   return (
-    <div>
-      <h1 className="text-red-500 text-2xl">Hello, world!</h1>
-      <Greeting name={"Manupa"} age={24} />
-      <Button onClick={handleClick}>Click Me</Button>
-      <Switch />
-    </div>
+    <>
+      <Navigation name="Manupa" />
+      <div className="relative min-h-screen">
+        <Hero />
+        <img
+          src="/assets/hero/hero_1.jpg"
+          alt=""
+          className="absolute top-0 left-0 w-full h-full object-cover -z-10"
+        />
+      </div>
+      <HotelListings />
+    </>
   );
 };
 
