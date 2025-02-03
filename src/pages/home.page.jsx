@@ -1,9 +1,7 @@
-import ExploreGrid from "@/components/ExploreGrid";
-import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import HotelListings from "@/components/HotelListings";
 
-function HomePage() {
+const HomePage = () => {
   return (
     <main>
       <div className="relative min-h-screen">
@@ -15,9 +13,8 @@ function HomePage() {
         />
       </div>
       <HotelListings />
-      <ExploreGrid />
     </main>
-  );
+  )
 }
 
-export default HomePage;
+export default HomePage

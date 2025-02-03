@@ -1,13 +1,11 @@
-import Footer from "@/components/Footer";
-import Navigation from "@/components/Navigation";
 import { Outlet } from "react-router";
+import Navigation from "@/components/Navigation";
 
 function MainLayout() {
   return (
     <>
-      <Navigation />
+      <Navigation name="Manupa" />
       <Outlet />
-      <Footer />
     </>
   );
 }
