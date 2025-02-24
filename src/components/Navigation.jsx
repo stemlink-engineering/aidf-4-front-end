@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { SignedIn, SignedOut, UserButton } from "@clerk/clerk-react";
 import { Globe } from "lucide-react";
-import { useSelector } from "react-redux";
 import { Link } from "react-router";
 
 function Navigation() {
@@ -25,15 +25,20 @@ function Navigation() {
           <Globe className="h-5 w-5 mr-2" />
           EN
         </Button>
-        <Button variant="ghost" asChild>
-          <Link to="/sign-in">Log In</Link>
-        </Button>
-        <Button asChild>
-          <Link to="/sign-up">Sign Up</Link>
-        </Button>
-        {/* <div>
-          <p>{userSlice.user.name}</p>
-        </div> */}
+        <SignedOut>
+          <Button variant="ghost" asChild>
+            <Link to="/sign-in">Log In</Link>
+          </Button>
+          <Button asChild>
+            <Link to="/sign-up">Sign Up</Link>
+          </Button>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+          <Button asChild>
+            <Link to="/account">My Account</Link>
+          </Button>
+        </SignedIn>
       </div>
     </nav>
   );
