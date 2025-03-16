@@ -1,27 +1,26 @@
-import { useGetHotelsQuery } from "@/lib/api";
+import { useGetHotelsForSearchQueryQuery } from "@/lib/api";
 import { useState } from "react";
 import HotelCard from "./HotelCard";
 import LocationTab from "./LocationTab";
-
+import { useSelector } from "react-redux";
 export default function HotelListings() {
-  const { data: hotels, isLoading, isError, error } = useGetHotelsQuery();
+  const searchValue = useSelector((state) => state.search.value);
+
+  const {
+    data: hotels,
+    isLoading,
+    isError,
+    error,
+  } = useGetHotelsForSearchQueryQuery({
+    query: searchValue,
+  });
 
   const locations = ["ALL", "France", "Italy", "Australia", "Japan"];
-
   const [selectedLocation, setSelectedLocation] = useState("ALL");
 
   const handleSelectedLocation = (location) => {
     setSelectedLocation(location);
   };
-
-  const filteredHotels =
-    selectedLocation === "ALL"
-      ? hotels
-      : hotels.filter((hotel) => {
-          return hotel.location
-            .toLowerCase()
-            .includes(selectedLocation.toLowerCase());
-        });
 
   if (isLoading) {
     return (
@@ -85,6 +84,15 @@ export default function HotelListings() {
     );
   }
 
+  const filteredHotels =
+    selectedLocation === "ALL"
+      ? hotels
+      : hotels.filter(({ hotel }) => {
+          return hotel.location
+            .toLowerCase()
+            .includes(selectedLocation.toLowerCase());
+        });
+
   return (
     <section className="px-8 py-8 lg:py-16">
       <div className="mb-12">
@@ -109,8 +117,8 @@ export default function HotelListings() {
         })}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-4">
-        {filteredHotels.map((hotel) => {
-          return <HotelCard key={hotel._id} hotel={hotel} />;
+        {filteredHotels.map(({hotel, confidence}) => {
+          return <HotelCard key={hotel._id} hotel={hotel} confidence={confidence} />;
         })}
       </div>
     </section>
