@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const BACKEND_URL = "https://aidf-horizone-backend-manupa.netlify.app";
+const BACKEND_URL = "https://aidf-horizone-backend-manupa.onrender.com";
 
 export const api = createApi({
   reducerPath: "api",
