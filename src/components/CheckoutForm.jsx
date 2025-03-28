@@ -17,6 +17,7 @@ const CheckoutForm = ({ bookingId }) => {
   const { getToken } = useAuth();
 
   const fetchClientSecret = useCallback(async () => {
+    const token = await getToken();
     // Create a Checkout Session
     const res = await fetch(
       `${BACKEND_URL}/api/payments/create-checkout-session`,
@@ -24,6 +25,7 @@ const CheckoutForm = ({ bookingId }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ bookingId }),
       }
