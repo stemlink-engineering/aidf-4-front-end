@@ -7,6 +7,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${BACKEND_URL}/api/`,
     prepareHeaders: async (headers, { getState }) => {
+           
       const token = await window?.Clerk?.session?.getToken();
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
