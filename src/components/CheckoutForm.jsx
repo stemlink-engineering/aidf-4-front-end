@@ -24,8 +24,8 @@ const CheckoutForm = ({ bookingId }) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          body: JSON.stringify({ bookingId }),
         },
+        body: JSON.stringify({ bookingId }),
       }
     );
     const data = await res.json();
