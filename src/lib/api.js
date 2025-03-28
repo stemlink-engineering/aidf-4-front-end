@@ -12,8 +12,6 @@ export const api = createApi({
           const clerk = window.Clerk;
           if (clerk) {
             const token = await clerk.session?.getToken();
-            console.log(token);
-
             headers.set("Authorization", `Bearer ${token}`);
             resolve(headers);
           } else {
