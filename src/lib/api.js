@@ -7,13 +7,21 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${BACKEND_URL}/api/`,
     prepareHeaders: async (headers, { getState }) => {
-           
-      const token = await window?.Clerk?.session?.getToken();
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
+      return new Promise((resolve) => {
+        async function checkToken() {
+          const clerk = window.Clerk;
+          if (clerk) {
+            const token = await clerk.session?.getToken();
+            console.log(token);
 
-      return headers;
+            headers.set("Authorization", `Bearer ${token}`);
+            resolve(headers);
+          } else {
+            setTimeout(checkToken, 500); // try again in 500ms
+          }
+        }
+        checkToken();
+      });
     },
   }),
 
