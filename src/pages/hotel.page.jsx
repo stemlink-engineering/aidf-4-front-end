@@ -14,6 +14,8 @@ import {
 import { useParams } from "react-router";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BookingDialog } from "@/components/BookingDialog";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 export default function HotelPage() {
   const { id } = useParams();
@@ -21,21 +23,16 @@ export default function HotelPage() {
   const [createBooking, { isLoading: isCreateBookingLoading }] =
     useCreateBookingMutation();
 
+  const navigate = useNavigate();
+
   const handleBook = async (bookingData) => {
     try {
-      await createBooking(bookingData);
-      toast({
-        title: "Booking successful",
-        description: "Your stay has been booked successfully!",
-        variant: "success",
-      });
+      const booking = await createBooking(bookingData).unwrap();
+      navigate(`/booking/payment?bookingId=${booking._id}`);
+      toast.success("Booking successful");
     } catch (error) {
       console.log(error);
-      toast({
-        title: "Booking failed",
-        description: "There was a problem with your booking. Please try again.",
-        variant: "destructive",
-      });
+      toast.error("Booking failed");
     }
   };
 
