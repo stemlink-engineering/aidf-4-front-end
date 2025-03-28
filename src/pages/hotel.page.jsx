@@ -13,25 +13,31 @@ import {
 
 import { useParams } from "react-router";
 import { Skeleton } from "@/components/ui/skeleton";
+import { BookingDialog } from "@/components/BookingDialog";
 
 export default function HotelPage() {
   const { id } = useParams();
   const { data: hotel, isLoading, isError, error } = useGetHotelByIdQuery(id);
-  const [createBooking, { isLoading: isCreateBookingLoading }
-  ] = useCreateBookingMutation();
+  const [createBooking, { isLoading: isCreateBookingLoading }] =
+    useCreateBookingMutation();
 
-  const handleBook = async () => {
+  const handleBook = async (bookingData) => {
     try {
-      await createBooking({
-        hotelId: id,
-        checkIn: new Date(),
-        checkOut: new Date(),
-        roomNumber: 200
-      })
+      await createBooking(bookingData);
+      toast({
+        title: "Booking successful",
+        description: "Your stay has been booked successfully!",
+        variant: "success",
+      });
     } catch (error) {
       console.log(error);
+      toast({
+        title: "Booking failed",
+        description: "There was a problem with your booking. Please try again.",
+        variant: "destructive",
+      });
     }
-  }
+  };
 
   if (isLoading)
     return (
@@ -153,7 +159,12 @@ export default function HotelPage() {
               <p className="text-2xl font-bold">${hotel.price}</p>
               <p className="text-sm text-muted-foreground">per night</p>
             </div>
-            <Button size="lg" onClick={handleBook}>Book Now</Button>
+            <BookingDialog
+              hotelName={hotel.name}
+              hotelId={id}
+              onSubmit={handleBook}
+              isLoading={isCreateBookingLoading}
+            />
           </div>
         </div>
       </div>
